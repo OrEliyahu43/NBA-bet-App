@@ -1,0 +1,25 @@
+.login .form{
+    margin-top: 1rem;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    width: 20rem;
+    height: 12rem;
+    align-items: center;
+}
+
+.login .form-container{
+    flex-direction: column;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login .register-btn{
+    margin-top: 1rem;
+}
+
+.create-user{
+    margin-top: 1rem;
+    color: rgb(105, 110, 109);
+}

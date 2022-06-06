@@ -1,0 +1,43 @@
+.main-navbar {
+    display: flex;
+    background-color: #46473E;
+    height: 4rem;
+    opacity: 0.8;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding: 0 0.5rem ;
+}
+
+.nba-logo {
+    width: 30px;
+}
+
+.list-container {
+    height: 100%;
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.list-container-item {
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-right: 1.5rem;
+    color: white;
+    
+    
+}
+
+li:hover{
+    cursor: pointer;
+    background-color: #767865;
+}
+
+.disable-active{
+}

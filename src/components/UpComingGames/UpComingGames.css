@@ -1,0 +1,55 @@
+.game-container {
+    height: 9rem;
+    width: 19rem;
+    display: flex;
+    border: 2px rgb(149, 147, 70) solid;
+    border-radius: 30px;
+    justify-content: center;
+}
+
+.game-container h3{
+    color: rgb(137, 110, 12);
+}
+.game-container h4{
+    margin-bottom: 10px;
+}
+
+.games-container {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+
+}
+.games-container h1{
+    color: rgb(94, 84, 84);
+}
+.bet-button{
+    border-radius: 5px;
+}
+.bet-button:hover{
+    cursor: pointer;
+}
+
+.team-bet {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    /* height: 100%; */
+    width: 35%;
+    justify-content: center;
+    align-items: center;
+}
+
+.team-logo {
+    width: 50px;
+}
+
+.option-bet {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
