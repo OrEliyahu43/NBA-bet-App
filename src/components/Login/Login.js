@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import './Login.css'
-const Login = () => {
+import { useNavigate } from "react-router-dom";
+
+const Login = (props) => {
 
     const [userInfo, setUserInfo] = useState({
         userName: '',
@@ -12,6 +14,9 @@ const Login = () => {
     })
 
     const [users, setUsers] = useState([])
+
+    const nav = useNavigate();
+
 
 
     useEffect(() => {
@@ -38,7 +43,12 @@ const Login = () => {
         })
         console.log(loginUser)
         if (loginUser) {
+            localStorage.setItem('isLogedIn', true)
+            localStorage.setItem('userName', loginUser.userName)
+            localStorage.setItem('id', loginUser.id)
             alert('succes login!')
+            props.login(true)
+            nav("/");
         }
         else {
             alert('incorrect deatils')

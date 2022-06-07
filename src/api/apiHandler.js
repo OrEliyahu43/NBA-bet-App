@@ -81,6 +81,18 @@ export async function getTeamsData() {
 
 }
 
+const dateDeatails = (date) => {
+    const stringDate = getStringDate(date)
+    const array = stringDate.split('-');
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    let weekDay = days[date.getDay()];
+    const hour = date.getHours()
+    const minute = date.getMinutes();
+    array.push(hour,minute)
+    return array;
+   
+}
+
 
 export async function gamesRange(rangeNumber) {
 
@@ -95,8 +107,10 @@ export async function gamesRange(rangeNumber) {
             const teamsData = await getTeamsData();
             const logoAway = teamsData[result[0].AwayTeamID - 1].WikipediaLogoUrl
             const logoHome = teamsData[result[0].HomeTeamID - 1].WikipediaLogoUrl
-            result[0].awayLogo = logoAway
-            result[0].homeLogo = logoHome
+            result[0].awayLogo = logoAway;
+            result[0].homeLogo = logoHome;
+            const dateInfo = dateDeatails(date);
+            result[0].dateInfo = dateInfo;
             gamesData.push(result[0]);
         }
 
