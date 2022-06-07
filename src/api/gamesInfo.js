@@ -2,7 +2,7 @@ import axios from "axios";
 
 const key = 'e7f43c3751fe43c893f3a379c09c6efa';
 
-function getStringDate(date) {
+export function getStringDate(date) {
 
     const monthNames = ["JAN", "FEB", "MRC", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
     // const date = new Date();
@@ -85,10 +85,13 @@ const dateDeatails = (date) => {
     const stringDate = getStringDate(date)
     const array = stringDate.split('-');
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    let weekDay = days[date.getDay()];
+    const weekDay = days[date.getDay()];
     const hour = date.getHours()
-    const minute = date.getMinutes();
-    array.push(hour,minute)
+    let minute = date.getMinutes();
+    if(minute===0)
+    minute = '00';
+    array.push(weekDay,hour,minute)
+    console.log("array of date is : " + array)
     return array;
    
 }
@@ -109,7 +112,8 @@ export async function gamesRange(rangeNumber) {
             const logoHome = teamsData[result[0].HomeTeamID - 1].WikipediaLogoUrl
             result[0].awayLogo = logoAway;
             result[0].homeLogo = logoHome;
-            const dateInfo = dateDeatails(date);
+            const gameDate = new Date(result[0].DateTime)
+            const dateInfo = dateDeatails(gameDate);
             result[0].dateInfo = dateInfo;
             gamesData.push(result[0]);
         }

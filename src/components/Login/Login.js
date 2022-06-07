@@ -21,9 +21,14 @@ const Login = (props) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const { data } = await axios.get('https://629deee9c6ef9335c0aa8da0.mockapi.io/users')
-            console.log(data)
-            setUsers(data);
+            try{
+
+                const { data } = await axios.get('https://629deee9c6ef9335c0aa8da0.mockapi.io/users')
+                console.log(data)
+                setUsers(data);
+            }catch(e){
+                console.log(e.message);
+            }
         }
         fetchData();
     }, [])
@@ -47,7 +52,12 @@ const Login = (props) => {
             localStorage.setItem('userName', loginUser.userName)
             localStorage.setItem('id', loginUser.id)
             alert('succes login!')
-            props.login(true)
+            const loginDeatails ={
+                userData: loginUser,
+                name: loginUser.userName,
+                id: loginUser.id
+            }
+            props.login(true,loginDeatails)
             nav("/");
         }
         else {

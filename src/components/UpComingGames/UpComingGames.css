@@ -27,6 +27,7 @@
     color: rgb(94, 84, 84);
 }
 .bet-button{
+    margin-top: 7px;
     border-radius: 5px;
 }
 .bet-button:hover{
@@ -49,7 +50,13 @@
 
 .option-bet {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
+
+.date-info{
+    margin: 0;
+    font-size: 0.75rem;
+}
