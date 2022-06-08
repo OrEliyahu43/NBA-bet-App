@@ -12,7 +12,8 @@ const Bet = (props) => {
     const [betComplete, setBetComplete] = useState(false);
     const [gameData , setGameData] = useState(JSON.parse(localStorage.getItem('game')));
     const [userDeatails , setUserDeatails] = useState(JSON.parse(localStorage.getItem('userDeatails')));
-    console.log(props.game)
+    const [moneyLine,SetMoneyLine] = useState(null)
+    
     const handleChange = (e) => {
         setMoneyTerm(e.target.value)
 
@@ -24,16 +25,11 @@ const Bet = (props) => {
             const { data } = await axios.get(`https://629deee9c6ef9335c0aa8da0.mockapi.io/bettingData`);
         
             const isAlreadyBet = data.find(bet => {
-                console.log('start')
-                console.log(bet.gameID)
-                console.log(gameData.GameID)
-                console.log(bet.userName)
-                console.log(userDeatails.name)
+               
                 if (bet.gameID === gameData.GameID && bet.userName === userDeatails.name) {
                     return true;
                 }
             })
-            console.log(`isAlreadyBet:${isAlreadyBet}`)
             if (isAlreadyBet) {
                 alert('you already bet on the game')
             }
@@ -58,23 +54,28 @@ const Bet = (props) => {
     const bet = async () => {
 
         console.log(`props.game: ${props.game}`)
+
         const betObject = {
             userName: userDeatails.name  ,
-            gameID: gameData.GameID,
+            GameID: gameData.GameID,
             onTeam: teamChosen,
             DateTime: gameData.DateTime,
             money: moneyTerm,
             IsClosed: false,
+            moneyLine : moneyLine
         }
         try {
 
             const { data } = await axios.post(`https://629deee9c6ef9335c0aa8da0.mockapi.io/bettingData`, betObject)
             console.log(data);
+            const array = userDeatails.userData.betsID
+            array.push(data.ID)
             const updateUser = {
                 ...userDeatails.userData,
-                betID: userDeatails.userData.betsID.push(data.ID)
+                betsID: array
             }
             const postedUpdate = await axios.put(`https://629deee9c6ef9335c0aa8da0.mockapi.io/users/${props.userDeatails.userData.id}`, updateUser)
+            console.log(postedUpdate);
         } catch (e) {
             console.log(e.message)
         }
@@ -83,6 +84,12 @@ const Bet = (props) => {
 
     const handleSelect = (e) => {
         setTeamChosen(e.target.value)
+        if(gameData.AwayTeam === e.target.value){
+            SetMoneyLine(gameData.AwayTeamMoneyLine)
+        }
+        else{
+            SetMoneyLine(gameData.HomeTeamMoneyLine)
+        }
     }
 
     if(betComplete){
@@ -106,7 +113,7 @@ const Bet = (props) => {
             <input className="form-control form-control-sms" onChange={e => { handleChange(e) }} value={moneyTerm}></input>
             <label htmlFor="bet">Choose a team:</label>
             <select className="form-select"  onClick={e => { handleSelect(e) }} id="bet" name="cars">
-                <option value={null} selected >select team </option>
+                <option value={null}  >select team </option>
                 <option value={gameData.AwayTeam}>{gameData.AwayTeam}</option>
                 <option value={gameData.HomeTeam}>{gameData.HomeTeam}</option>
 

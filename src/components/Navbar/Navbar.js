@@ -28,6 +28,8 @@ const Navbar = (props) => {
         localStorage.removeItem('isLogedIn')
         localStorage.removeItem('userName')
         localStorage.removeItem('id')
+        localStorage.removeItem('userDeatails')
+        localStorage.removeItem('game')
         setIsUserLoggedIn(false)
         props.setIsLogedIn(null);
         nav("/login");

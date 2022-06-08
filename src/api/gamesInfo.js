@@ -107,15 +107,18 @@ export async function gamesRange(rangeNumber) {
         const stringDate = getStringDate(date);
         const result = await gamesByDate(stringDate);
         if (result.length > 0) {
-            const teamsData = await getTeamsData();
-            const logoAway = teamsData[result[0].AwayTeamID - 1].WikipediaLogoUrl
-            const logoHome = teamsData[result[0].HomeTeamID - 1].WikipediaLogoUrl
-            result[0].awayLogo = logoAway;
-            result[0].homeLogo = logoHome;
-            const gameDate = new Date(result[0].DateTime)
-            const dateInfo = dateDeatails(gameDate);
-            result[0].dateInfo = dateInfo;
-            gamesData.push(result[0]);
+            for(let i = 0 ; i<result.length;i++){
+
+                const teamsData = await getTeamsData();
+                const logoAway = teamsData[result[i].AwayTeamID - 1].WikipediaLogoUrl
+                const logoHome = teamsData[result[i].HomeTeamID - 1].WikipediaLogoUrl
+                result[i].awayLogo = logoAway;
+                result[i].homeLogo = logoHome;
+                const gameDate = new Date(result[i].DateTime)
+                const dateInfo = dateDeatails(gameDate);
+                result[i].dateInfo = dateInfo;
+                gamesData.push(result[i]);
+            }
         }
 
     }

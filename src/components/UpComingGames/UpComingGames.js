@@ -46,7 +46,7 @@ const UpComingGames = (props) => {
             return (
                 <div key={game.GameID} className="game-container">
                     <div className="team-bet">
-                        <img className="team-logo" src={game.homeLogo}></img>
+                        <img alt="problem" className="team-logo" src={game.homeLogo}></img>
                         <h4>{game.HomeTeam}</h4>
                         <h6>MoneyLine:</h6>
                         <h3>{game.HomeTeamMoneyLine ? game.HomeTeamMoneyLine : 'not set yet'}</h3>
@@ -57,7 +57,7 @@ const UpComingGames = (props) => {
 
                     </div>
                     <div className="team-bet">
-                        <img className="team-logo" src={game.awayLogo}></img>
+                        <img alt="problem" className="team-logo" src={game.awayLogo}></img>
                         <h4>{game.AwayTeam}</h4>
                         <h6>MoneyLine:</h6>
                         <h3>{game.AwayTeamMoneyLine ? game.AwayTeamMoneyLine : 'not set yet'}</h3>
@@ -96,8 +96,8 @@ const UpComingGames = (props) => {
         return (
             <div className="games-container">
 
-                <div class="spinner-border" role="status">
-                    <span class="sr-only"></span>
+                <div className="spinner-border" role="status">
+                    <span className="sr-only"></span>
                 </div>
             </div >
         )

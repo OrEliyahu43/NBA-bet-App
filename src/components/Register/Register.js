@@ -34,21 +34,26 @@ const Register = () => {
     const createUser = async (e) => {
         e.preventDefault()
         const availble = checkUser(userInfo.userName)
-        if (availble) {
+        if (availble && userInfo.userName !== '' & userInfo.password != '') {
             try {
                 const newUser = {
                     userName: userInfo.userName,
-                    password: userInfo.password
+                    password: userInfo.password,
+                    earnedMoney : 0,
+                    looseMoney : 0,
+                    success : 0,
+                    bestTeams:null,
                 }
                 const postedData = await axios.post('https://629deee9c6ef9335c0aa8da0.mockapi.io/users', newUser)
                 console.log(postedData)
+                console.log(userInfo)
                 setIsRegistered(true)
             } catch (e) {
                 console.log(e.message)
             }
         }
         else {
-            alert("user name not avaible")
+            alert("user name not avaible or empty fields")
         }
     }
 
