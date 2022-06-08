@@ -6,8 +6,9 @@ import { useState } from "react";
 const User = (props) => {
 
     const [isLogedIn, setIsLogedIn] = useState(localStorage.getItem('isLogedIn'));
+    const [userDeatails,setUserDeatails] = useState(JSON.parse(localStorage.getItem('userDeatails')))
 
-
+    const id = localStorage.getItem('id')
 
     useEffect(() => {
 

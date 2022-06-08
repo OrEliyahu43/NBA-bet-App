@@ -19,6 +19,7 @@ const HomePage = () => {
     const handleLogin = (bool,objDeatails) => {
         setUserDeatails(objDeatails);
         setIsLogedIn(bool);
+        localStorage.setItem('userDeatails',JSON.stringify(objDeatails))
     }
     return (
 

@@ -2,11 +2,16 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { insertGameData } from "../../api/betApi";
 import './Bet.css'
+import { useNavigate } from "react-router-dom"
 const Bet = (props) => {
 
+    const nav = useNavigate();
 
     const [moneyTerm, setMoneyTerm] = useState('')
     const [teamChosen, setTeamChosen] = useState(null);
+    const [betComplete, setBetComplete] = useState(false);
+    const [gameData , setGameData] = useState(JSON.parse(localStorage.getItem('game')));
+    const [userDeatails , setUserDeatails] = useState(JSON.parse(localStorage.getItem('userDeatails')));
     console.log(props.game)
     const handleChange = (e) => {
         setMoneyTerm(e.target.value)
@@ -21,10 +26,10 @@ const Bet = (props) => {
             const isAlreadyBet = data.find(bet => {
                 console.log('start')
                 console.log(bet.gameID)
-                console.log(props.game.GameID)
+                console.log(gameData.GameID)
                 console.log(bet.userName)
-                console.log(props.userDeatails.name)
-                if (bet.gameID === props.game.GameID && bet.userName === props.userDeatails.name) {
+                console.log(userDeatails.name)
+                if (bet.gameID === gameData.GameID && bet.userName === userDeatails.name) {
                     return true;
                 }
             })
@@ -33,7 +38,9 @@ const Bet = (props) => {
                 alert('you already bet on the game')
             }
             else {
+                setBetComplete(true)
                 bet();
+                nav("/user")
             }
         } catch (e) {
             console.log(e.message)
@@ -43,16 +50,19 @@ const Bet = (props) => {
     useEffect(() => {
 
 
+      
+
+
     })
     // https://629deee9c6ef9335c0aa8da0.mockapi.io/bettingData
     const bet = async () => {
 
         console.log(`props.game: ${props.game}`)
         const betObject = {
-            userName: props.userDeatails.name,
-            gameID: props.game.GameID,
+            userName: userDeatails.name  ,
+            gameID: gameData.GameID,
             onTeam: teamChosen,
-            DateTime: props.game.DateTime,
+            DateTime: gameData.DateTime,
             money: moneyTerm,
             IsClosed: false,
         }
@@ -61,8 +71,8 @@ const Bet = (props) => {
             const { data } = await axios.post(`https://629deee9c6ef9335c0aa8da0.mockapi.io/bettingData`, betObject)
             console.log(data);
             const updateUser = {
-                ...props.userDeatails.userData,
-                betID: props.userDeatails.userData.betsID.push(data.ID)
+                ...userDeatails.userData,
+                betID: userDeatails.userData.betsID.push(data.ID)
             }
             const postedUpdate = await axios.put(`https://629deee9c6ef9335c0aa8da0.mockapi.io/users/${props.userDeatails.userData.id}`, updateUser)
         } catch (e) {
@@ -75,22 +85,35 @@ const Bet = (props) => {
         setTeamChosen(e.target.value)
     }
 
+    if(betComplete){
+        return(
+            <div className="bet-container">
+                <h1>you successfull bet on this game </h1>
+                <h1> check it on your user section</h1>
+
+            </div>
+        )
+    }
+
 
     return (
+        <div className="bet-page-container">
         <div className="bet-container">
-            {insertGameData(props.game)}
+            {insertGameData(gameData)}
             <label>
                 <h2>Money ammout</h2>
             </label>
-            <input onChange={e => { handleChange(e) }} value={moneyTerm}></input>
-            <label for="bet">Choose a team:</label>
-            <select onClick={e => { handleSelect(e) }} id="bet" name="cars">
-                <option value={props.game.AwayTeam}>{props.game.AwayTeam}</option>
-                <option value={props.game.HomeTeam}>{props.game.HomeTeam}</option>
+            <input className="form-control form-control-sms" onChange={e => { handleChange(e) }} value={moneyTerm}></input>
+            <label htmlFor="bet">Choose a team:</label>
+            <select className="form-select"  onClick={e => { handleSelect(e) }} id="bet" name="cars">
+                <option value={null} selected >select team </option>
+                <option value={gameData.AwayTeam}>{gameData.AwayTeam}</option>
+                <option value={gameData.HomeTeam}>{gameData.HomeTeam}</option>
 
             </select>
 
-            <button onClick={checkPosible}>bet</button>
+            <button className="button-6" onClick={checkPosible}>bet</button>
+        </div>
         </div>
     )
 }

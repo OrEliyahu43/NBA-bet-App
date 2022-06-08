@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import React from "react";
 
 export function insertGameData(game)  {
 
@@ -7,12 +7,14 @@ export function insertGameData(game)  {
             <div className="game-container">
                 <div className="team-bet">
                     <img className="team-logo" src={game.homeLogo}></img>
+                    {console.log('game.HomeTeam')}
                     <h4>{game.HomeTeam}</h4>
                     <h6>MoneyLine:</h6>
                     <h3>{game.HomeTeamMoneyLine ? game.HomeTeamMoneyLine : 'not set yet'}</h3>
                 </div>
                 <div className="option-bet">
                     {insertDate(game.dateInfo)}
+                    bla
 
                 </div>
                 <div className="team-bet">

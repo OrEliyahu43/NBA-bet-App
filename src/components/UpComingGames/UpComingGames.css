@@ -1,6 +1,6 @@
 .game-container {
-    height: 9rem;
-    width: 19rem;
+    height: 13rem;
+    width: 20rem;
     display: flex;
     border: 2px rgb(149, 147, 70) solid;
     border-radius: 30px;
@@ -26,15 +26,15 @@
 .games-container h1{
     color: rgb(94, 84, 84);
 }
-.bet-button{
+.game-container .bet-button{
     margin-top: 7px;
     border-radius: 5px;
 }
-.bet-button:hover{
+.game-container .bet-button:hover{
     cursor: pointer;
 }
 
-.team-bet {
+.game-container .team-bet {
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -44,11 +44,11 @@
     align-items: center;
 }
 
-.team-logo {
+.game-container .team-logo {
     width: 50px;
 }
 
-.option-bet {
+.game-container .option-bet {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -56,7 +56,7 @@
 }
 
 
-.date-info{
+.game-container .date-info{
     margin: 0;
     font-size: 0.75rem;
 }

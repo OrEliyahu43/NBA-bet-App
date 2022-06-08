@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import './Register.css'
 import axios, { Axios } from "axios";
+import bootstrap from "bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 const Register = () => {
@@ -83,13 +86,13 @@ const Register = () => {
                 <h2>Register</h2>
                 <form className="form">
                     <label>User Name</label>
-                    <input name="userName" onChange={e => { inputHandler(e) }} value={userInfo.userName} type="text"></input>
+                    <input className="form-control form-control-sm" name="userName" onChange={e => { inputHandler(e) }} value={userInfo.userName} type="text"></input>
                     <label>password</label>
-                    <input name="password" onChange={e => { inputHandler(e) }} value={userInfo.password} type="text"></input>
+                    <input className="form-control form-control-sm" name="password" onChange={e => { inputHandler(e) }} value={userInfo.password} type="text"></input>
                     <label>password verify</label>
-                    <input name="verifyPassword" onChange={e => { inputHandler(e) }} value={userInfo.verifyPassword} type="text"></input>
+                    <input className="form-control form-control-sm" name="verifyPassword" onChange={e => { inputHandler(e) }} value={userInfo.verifyPassword} type="text"></input>
 
-                    <button onClick={e => { createUser(e) }} className="register-btn">Create account</button>
+                    <button className="button-6" onClick={e => { createUser(e) }} >Create account</button>
                 </form>
             </div>
         </div>

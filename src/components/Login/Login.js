@@ -73,12 +73,12 @@ const Login = (props) => {
                 <h2>Login</h2>
                 <form className="form">
                     <label>User Name</label>
-                    <input name="userName" onChange={e => { inputHandler(e) }} value={userInfo.userName} type="text"></input>
+                    <input className="form-control form-control-sm" name="userName" onChange={e => { inputHandler(e) }} value={userInfo.userName} type="text"></input>
                     <label>password</label>
-                    <input name="password" onChange={e => { inputHandler(e) }} value={userInfo.password} type="text"></input>
+                    <input className="form-control form-control-sm" name="password" onChange={e => { inputHandler(e) }} value={userInfo.password} type="text"></input>
 
 
-                    <button onClick={e => { loginCheck(e) }} className="register-btn">Login</button>
+                    <button className="button-6" onClick={e => { loginCheck(e) }} >Login</button>
                 </form>
 
                 <p className="create-user"><Link to="/register">Sign up</Link></p>

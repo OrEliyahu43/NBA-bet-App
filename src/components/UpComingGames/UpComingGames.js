@@ -8,9 +8,10 @@ import { insertGamesData } from "../../api/betApi.js";
 
 const UpComingGames = (props) => {
 
-
+    const [isLogedIn, setIsLogedIn] = useState(localStorage.getItem('isLogedIn'));
     const [games, setGames] = useState([]);
     const [insertGames, setInsertGames] = useState([])
+    const [spinner, setSpinner] = useState(true)
     console.log(games)
     const nav = useNavigate();
 
@@ -19,18 +20,19 @@ const UpComingGames = (props) => {
         return (
             <div>
                 <span className="date-info">{`${array[1]}${array[2]}`}
-                  <br/>{`${array[3]}`}</span><br></br>
+                    <br />{`${array[3]}`}</span><br></br>
                 <span className="date-info">{`${array[4]}:${array[5]}`}</span>
             </div>
         )
     }
 
     const betHandle = (game) => {
-        console.log(props.isLogedIn)
-        if(props.isLogedIn !== true){
+        console.log(`check:${isLogedIn}`)
+        if (isLogedIn !== 'true') {
             alert('please login first')
         }
-        else{
+        else {
+            localStorage.setItem('game', JSON.stringify(game));
             props.updateParent(game)
             nav("/bet")
         }
@@ -51,7 +53,7 @@ const UpComingGames = (props) => {
                     </div>
                     <div className="option-bet">
                         {insertDate(game.dateInfo)}
-                        {game.HomeTeamMoneyLine ? <button onClick={e => {betHandle(game)}} className="bet-button">set a bet!</button> : 'not accesble'}
+                        {game.HomeTeamMoneyLine ? <button onClick={e => { betHandle(game) }} className="bet-button">set a bet!</button> : 'not accesble'}
 
                     </div>
                     <div className="team-bet">
@@ -65,6 +67,7 @@ const UpComingGames = (props) => {
             )
         })
         console.log(gamesUI)
+        setSpinner(false)
         return gamesUI;
     }
 
@@ -88,7 +91,17 @@ const UpComingGames = (props) => {
 
 
 
+    if (spinner) {
 
+        return (
+            <div className="games-container">
+
+                <div class="spinner-border" role="status">
+                    <span class="sr-only"></span>
+                </div>
+            </div >
+        )
+    }
 
     return (
         <div className="games-container">
