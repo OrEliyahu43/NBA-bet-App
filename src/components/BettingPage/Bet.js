@@ -26,10 +26,12 @@ const Bet = (props) => {
         
             const isAlreadyBet = data.find(bet => {
                
-                if (bet.gameID === gameData.GameID && bet.userName === userDeatails.name) {
+                if (bet.GameID === gameData.GameID && bet.userName === userDeatails.name) {
                     return true;
                 }
             })
+
+            console.log(isAlreadyBet)
             if (isAlreadyBet) {
                 alert('you already bet on the game')
             }
