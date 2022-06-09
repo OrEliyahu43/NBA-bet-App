@@ -93,9 +93,9 @@ const Register = () => {
                     <label>User Name</label>
                     <input className="form-control form-control-sm" name="userName" onChange={e => { inputHandler(e) }} value={userInfo.userName} type="text"></input>
                     <label>password</label>
-                    <input className="form-control form-control-sm" name="password" onChange={e => { inputHandler(e) }} value={userInfo.password} type="text"></input>
+                    <input className="form-control form-control-sm" name="password" onChange={e => { inputHandler(e) }} value={userInfo.password} type="password"></input>
                     <label>password verify</label>
-                    <input className="form-control form-control-sm" name="verifyPassword" onChange={e => { inputHandler(e) }} value={userInfo.verifyPassword} type="text"></input>
+                    <input className="form-control form-control-sm" name="verifyPassword" onChange={e => { inputHandler(e) }} value={userInfo.verifyPassword} type="password"></input>
 
                     <button className="button-6" onClick={e => { createUser(e) }} >Create account</button>
                 </form>
