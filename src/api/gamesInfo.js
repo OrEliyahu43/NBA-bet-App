@@ -81,7 +81,7 @@ export async function getTeamsData() {
 
 }
 
-const dateDeatails = (date) => {
+ const dateDeatails = (date) => {
     const stringDate = getStringDate(date)
     const array = stringDate.split('-');
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];

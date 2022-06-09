@@ -70,12 +70,20 @@ const Bet = (props) => {
             console.log(data);
             const array = userDeatails.userData.betsID
             array.push(data.ID)
-            const updateUser = {
+            const updatedUser = {
                 ...userDeatails.userData,
                 betsID: array
             }
-            const postedUpdate = await axios.put(`https://629deee9c6ef9335c0aa8da0.mockapi.io/users/${props.userDeatails.userData.id}`, updateUser)
+
+            const postedUpdate = await axios.put(`https://629deee9c6ef9335c0aa8da0.mockapi.io/users/${props.userDeatails.userData.id}`, updatedUser)
             console.log(postedUpdate);
+            const loginDeatails = {
+                userData: updatedUser,
+                name: userDeatails.userData.userName,
+                id: userDeatails.userData.id
+            }
+
+            localStorage.setItem('userDeatails', JSON.stringify(loginDeatails));
         } catch (e) {
             console.log(e.message)
         }

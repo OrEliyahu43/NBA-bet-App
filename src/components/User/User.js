@@ -38,6 +38,12 @@ const User = (props) => {
 
     }
 
+    const calculateSucees = () => {
+        console.log()
+       const percent =  (userDeatails.userData.winBetsID.length/(userDeatails.userData.winBetsID.length + userDeatails.userData.looseBetsID.length)) * 100
+        return percent;
+    }
+
 
     const analysisMoney = (monyline, money) => {
         let earn;
@@ -184,7 +190,8 @@ const User = (props) => {
             </div >
         )
     }
-    if (isLogedIn === false) {
+
+    if (isLogedIn !== 'true') {
 
         return (
             <div>
@@ -197,18 +204,21 @@ const User = (props) => {
         <div>
 
             <div className="statistic-container">
-                <h1>total earned money:</h1>
+                <h3>total earned money: {userDeatails.userData.earnedMoney.toFixed(2)}<span className="win">$</span></h3>
+                <h3>total loose money money: -{userDeatails.userData.looseMoney.toFixed(2)}<span className="lo">$</span></h3>
+                <h3>success percentage: {calculateSucees()}%</h3>
 
-
+                
             </div>
 
             <div className="games-container">
-                <h1> your wining bets </h1>
+                <h1> your wining bets: </h1>
                 {winBetsDisplay}
-                <h1> your loosing bets </h1>
+                <h1> your loosing bets: </h1>
                 {looseBetsDisplay}
+
                 <h1> your waiting bets </h1>
-                {waitingBetsDisplay}
+                {waitingBetsDisplay.length !== 0 ? waitingBetsDisplay : <h3> no waiting games</h3>  }
 
             </div>
         </div>

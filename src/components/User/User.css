@@ -63,8 +63,17 @@
 
 
 .statistic-container{
-
+    flex-direction: column;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.lo{
+    color:red;
+    font-size: 1.5rem;
+}
+.win{
+    font-size: 1.5rem;
+    color:green
 }
