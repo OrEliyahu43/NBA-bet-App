@@ -25,7 +25,7 @@ export async function UpComingPost() {
     try {
         const { data } = await axios.get(`https://intense-mesa-62220.herokuapp.com/api.sportsdata.io/v3/nba/scores/json/Games/${year}POST`,
             {
-                headers: { 'Ocp-Apim-Subscription-Key': 'e7f43c3751fe43c893f3a379c09c6efa' }
+                headers: { 'Ocp-Apim-Subscription-Key': '77ea9cb1c3154e5ea1c1e8cfb518223a' }
             }
         )
         console.log(data)
@@ -56,7 +56,7 @@ export async function gamesByDate(dateString) {
 
         const { data } = await axios.get(`https://intense-mesa-62220.herokuapp.com/api.sportsdata.io/v3/nba/scores/json/GamesByDate/${dateString}`,
             {
-                headers: { 'Ocp-Apim-Subscription-Key': 'e7f43c3751fe43c893f3a379c09c6efa' }
+                headers: { 'Ocp-Apim-Subscription-Key': '77ea9cb1c3154e5ea1c1e8cfb518223a' }
             }
         )
         return data;
@@ -70,7 +70,7 @@ export async function getTeamsData() {
 
         const { data } = await axios.get(`https://intense-mesa-62220.herokuapp.com/api.sportsdata.io/v3/nba/scores/json/teams`,
             {
-                headers: { 'Ocp-Apim-Subscription-Key': 'e7f43c3751fe43c893f3a379c09c6efa' }
+                headers: { 'Ocp-Apim-Subscription-Key': '77ea9cb1c3154e5ea1c1e8cfb518223a' }
             }
         )
         return data;

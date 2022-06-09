@@ -4,11 +4,38 @@ import { useState } from "react";
 import axios from "axios";
 import { getStringDate } from "../../api/gamesInfo";
 import { gamesByDate } from "../../api/gamesInfo";
+import { insertGamesData } from "../../api/userApi";
+
 const User = (props) => {
 
     const [isLogedIn, setIsLogedIn] = useState(localStorage.getItem('isLogedIn'));
     const [userDeatails, setUserDeatails] = useState(JSON.parse(localStorage.getItem('userDeatails')))
+    const [analysisFinish,setAnalysisFinish ] = useState(false)
+    const [spinner, setSpinner] = useState(true)
+    const [winBetsDisplay, setWinBetsDisplay] = useState([])
+    const [looseBetsDisplay, setLooseBetsDisplay] = useState([])
+    const [waitingBetsDisplay, setWatingBetsDisplay] = useState([])
+    
+    const insertAllGames = () => {
+        if(userDeatails.userData.winBetsID.length !== 0){
 
+            setWinBetsDisplay(prev => {insertGamesData(userDeatails.userData.winBetsID)})
+            
+        }
+        
+        if(userDeatails.userData.looseBetsID.length !== 0 ){
+            
+            setLooseBetsDisplay(prev => {insertGamesData(userDeatails.userData.looseBetsID)})
+        }
+
+        if(userDeatails.userData.looseBetsID.length !== 0 ){
+            
+            setWatingBetsDisplay(prev => {insertGamesData(userDeatails.userData.waitingBets)})
+        }
+        setSpinner(false)
+
+
+    }
 
 
     const analysisMoney = (monyline, money) => {
@@ -26,6 +53,7 @@ const User = (props) => {
 
     const analyze = async () => {
         const betsData = userDeatails.userData.betsID;
+        const waitingBets =[]
         const winBets = []
         const looseBets = []
         let earn = 0;
@@ -37,26 +65,35 @@ const User = (props) => {
                 const { data } = await axios.get(`https://629deee9c6ef9335c0aa8da0.mockapi.io/bettingData/${betid}`)
                 console.log(data)
                 const dateGame = new Date(data.DateTime);
-                const stringDate = getStringDate(dateGame)
+                const stringDate = getStringDate(dateGame);
+                console.log('requesttttt')
+                
                 const alldateGames = await gamesByDate(stringDate);
                 for (let j = 0; j < alldateGames.length; j++) {
                     // console.log(`what i check:${alldateGames[j]}`)
 
 
-                    console.log("ISGAME ID:" + alldateGames[j].GameID +" is equals to " + data.GameID + "? " + alldateGames[j].GameID === data.GameID)
-                    console.log("Is Close:" + alldateGames[j].IsClosed +" is equals to " + alldateGames[j].IsClosed === true)
+                    // console.log("ISGAME ID:" + alldateGames[j].GameID +" is equals to " + data.GameID + "? " + alldateGames[j].GameID === data.GameID)
+                    // console.log("Is Close:" + alldateGames[j].IsClosed +" is equals to " + alldateGames[j].IsClosed === true)
 
-                    console.log("SECOND :" + alldateGames[j].IsClosed === true)
-
+                    // console.log("SECOND :" + alldateGames[j].IsClosed === true)
+                    console.log("Check", alldateGames[j].GameID);
+                    console.log("Bet", data.GameID)
+                    console.log("Closed", alldateGames[j].IsClosed)
+                    if(alldateGames[j].GameID === data.GameID && alldateGames[j].IsClosed === false){
+                        waitingBets.push(alldateGames[j]);
+                    }
                     if (alldateGames[j].GameID === data.GameID && alldateGames[j].IsClosed === true) {
                         let win;
                         if (parseInt(alldateGames[j].HomeTeamScore) > parseInt(alldateGames[j].AwayTeamScore)) {
                             win = alldateGames[j].HomeTeam
+                            console.log("enter1",win)
                         }
                         else {
                             win = alldateGames[j].AwayTeam
+                            console.log("enter2",win)
                         }
-                        if (win = data.onTeam) {
+                        if (win === data.onTeam) {
                             earn += analysisMoney(parseInt(data.moneyLine), parseInt(data.money));
                             alldateGames[j].earned = earn;
                             winBets.push(alldateGames[j])
@@ -76,7 +113,7 @@ const User = (props) => {
                     IsClosed: true
                 }
                 const postedData = await axios.put(`https://629deee9c6ef9335c0aa8da0.mockapi.io/bettingData/${betid}`, updatedData)
-
+                console.log(postedData)
 
             } catch (e) {
                 console.log(e.message)
@@ -105,22 +142,64 @@ const User = (props) => {
                 looseMoney: userLoosesMoney + loose,
                 winBetsID: updateWinArr,
                 looseBetsID: updateLooseArr,
-                betsID: []
+                betsID: [],
+                waitingBets : waitingBets
+
             }
             const updatedUserData = await axios.put(`https://629deee9c6ef9335c0aa8da0.mockapi.io/users/${userDeatails.userData.id}`, updatedUser)
+            const loginDeatails ={
+                userData: updatedUser,
+                name: userDeatails.userData.userName,
+                id: userDeatails.userData.id
+            }
+            localStorage.setItem('userDeatails',JSON.stringify(loginDeatails));
+            setAnalysisFinish(true)
         }
     }
 
 
     useEffect(() => {
-        analyze();
+        if(analysisFinish === false){
+            analyze();
+        }
+        else{ 
+            insertAllGames();
+        }
 
-    })
+    },[analysisFinish])
 
+
+    if (spinner) {
+
+        return (
+            <div className="games-container">
+
+                <div className="spinner-border" role="status">
+                    <span className="sr-only"></span>
+                </div>
+            </div >
+        )
+    }
+    if(isLogedIn===false){
+
+        return(
+            <div>
+            <h1>please login first</h1>
+            </div>
+        )
+    }
 
     return (
         <div className="user">
-            {isLogedIn ? <h1>hi user</h1> : <h1>login first</h1>}
+
+             
+            <h1> your wining bets </h1>  
+            {winBetsDisplay}
+            <h1> your loosing bets </h1>
+            {looseBetsDisplay}
+            <h1> your waiting bets </h1> 
+            {waitingBetsDisplay}
+
         </div>
     )
 }
