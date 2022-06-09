@@ -29,7 +29,7 @@ const User = (props) => {
             setLooseBetsDisplay( await insertGamesData(userDeatails.userData.looseBetsID) )
         }
         
-        if (userDeatails.userData.looseBetsID.length !== 0) {
+        if (userDeatails.userData.waitingBets.length !== 0) {
             
             setWatingBetsDisplay(await insertGamesData(userDeatails.userData.waitingBets) )
         }

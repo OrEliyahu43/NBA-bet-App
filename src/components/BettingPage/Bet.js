@@ -36,6 +36,7 @@ const Bet = (props) => {
                 alert('you already bet on the game')
             }
             else {
+                
                 setBetComplete(true)
                 bet();
                 nav("/user")
@@ -77,14 +78,14 @@ const Bet = (props) => {
                 betsID: array
             }
 
-            const postedUpdate = await axios.put(`https://629deee9c6ef9335c0aa8da0.mockapi.io/users/${props.userDeatails.userData.id}`, updatedUser)
+            const postedUpdate = await axios.put(`https://629deee9c6ef9335c0aa8da0.mockapi.io/users/${userDeatails.id}`, updatedUser)
             console.log(postedUpdate);
             const loginDeatails = {
                 userData: updatedUser,
                 name: userDeatails.userData.userName,
                 id: userDeatails.userData.id
             }
-
+            console.log('LOCAL STORAGE')
             localStorage.setItem('userDeatails', JSON.stringify(loginDeatails));
         } catch (e) {
             console.log(e.message)
